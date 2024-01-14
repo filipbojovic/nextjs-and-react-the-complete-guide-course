@@ -14,13 +14,11 @@ export default function NavLink({ href, children }: NavLinkProps) {
   const path: string = usePathname();
 
   return (
-    <li>
-      <Link
-        href={href}
-        className={path.startsWith(href) ? `${classes.link} ${classes.active}` : `${classes.link}`}
-      >
-        {children}
-      </Link>
-    </li>
+    <Link
+      href={href}
+      className={path.startsWith(href) ? `${classes.link} ${classes.active}` : `${classes.link}`}
+    >
+      {children}
+    </Link>
   );
 }
