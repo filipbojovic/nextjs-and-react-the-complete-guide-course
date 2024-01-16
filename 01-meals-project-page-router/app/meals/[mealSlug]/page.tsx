@@ -10,6 +10,23 @@ type MealDetailsProps = {
   };
 };
 
+// must be called like this because nextJs automatically looks for functions with this name
+// if static metadata doesn't exist
+// this functions receives the same data the main function MealDetailsPage receives
+export async function generateMetadata({ params }: MealDetailsProps) {
+  const meal: MealModel = getMeal(params.mealSlug);
+
+  // metadata function is executed before the main function below
+  if (!meal) {
+    notFound();
+  }
+
+  return {
+    title: meal.title,
+    description: meal.summary,
+  };
+}
+
 export default function MealDetailsPage({ params }: MealDetailsProps) {
   const meal: MealModel = getMeal(params.mealSlug);
 
@@ -25,7 +42,7 @@ export default function MealDetailsPage({ params }: MealDetailsProps) {
     <>
       <header className={classes.header}>
         <div className={classes.image}>
-          <Image src={meal.image} alt={meal.title} fill />
+          <Image src={meal.image!} alt={meal.title} fill />
         </div>
         <div className={classes.headerText}>
           <h1>{meal.title}</h1>

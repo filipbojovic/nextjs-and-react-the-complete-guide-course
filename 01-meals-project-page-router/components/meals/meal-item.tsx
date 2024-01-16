@@ -4,10 +4,11 @@ import Image from "next/image";
 import classes from "./meal-item.module.css";
 
 export type MealModel = {
-  id: string;
+  id?: string;
   title: string;
-  slug: string;
-  image: string;
+  slug?: string;
+  image?: string;
+  imageFile?: File; // it is used only in a request (Dto only)
   summary: string;
   instructions: string;
   creator: string;
@@ -19,7 +20,7 @@ export default function MealItem({ id, title, slug, image, summary, creator }: M
     <article className={classes.meal}>
       <header>
         <div className={classes.image}>
-          <Image src={image} alt={title} fill />
+          <Image src={image!} alt={title} fill />
         </div>
         <div className={classes.headerText}>
           <h2>{title}</h2>

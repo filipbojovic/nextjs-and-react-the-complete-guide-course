@@ -4,12 +4,18 @@ import classes from "./page.module.css";
 import { MealModel } from "@/components/meals/meal-item";
 import { getMeals } from "@/lib/meals";
 import { Suspense } from "react";
+import { Metadata } from "next";
 
 async function Meals() {
   const meals: MealModel[] = await getMeals();
 
   return <MealsGrid meals={meals} />;
 }
+
+export const metadata: Metadata = {
+  title: "All Meals",
+  description: "Browse the delicious meals shared by our vibrant community.",
+};
 
 export default function MeanlsPage() {
   return (
