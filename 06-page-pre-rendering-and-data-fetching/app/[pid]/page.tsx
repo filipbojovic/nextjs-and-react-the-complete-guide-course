@@ -1,6 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { Product } from "../page";
+import { notFound } from "next/navigation";
 
 type ProductDetailPageProps = {
   params: { pid: string };
@@ -19,14 +20,23 @@ async function ProductDetailPage(props: ProductDetailPageProps) {
   );
 }
 
-// pre-generate a page with dynamic-params is combined with generateStaticParams below
-async function getProductDetail({ params }: ProductDetailPageProps) {
-  const productId = params.pid;
-
+async function getData() {
   const filePath = path.join(process.cwd(), "data", "dummy-backend.json");
   const jsonData = await fs.readFile(filePath);
   const products: Product[] = JSON.parse(jsonData.toString())["products"];
-  const product: Product = products.find((p) => p.id === productId);
+
+  return products;
+}
+
+// pre-generate a page with dynamic-params is combined with generateStaticParams below
+async function getProductDetail({ params }: ProductDetailPageProps) {
+  const productId = params.pid;
+  const products: Product[] = await getData();
+  const product: Product = products.find((p) => p.id === productId)!;
+
+  if (!product) {
+    return notFound();
+  }
 
   return product;
 }
@@ -34,10 +44,16 @@ async function getProductDetail({ params }: ProductDetailPageProps) {
 // ProductDetailPage should be pre-generated three times iwth these three values
 // and then nextJs will call getProductDetail 3 times for these IDs
 export async function generateStaticParams() {
-  return [{ pid: "p1" }, { pid: "p2" }, { pid: "p3" }];
+  const products: Product[] = await getData();
+  const ids = products.map((p) => p.id);
+  const params = ids.map((id) => ({ pid: id }));
+
+  return params;
+  // return [{ pid: "p1" }, { pid: "p2" }, { pid: "p3" }];
 }
 
 // controls how params outside of generateStaticParams are handled
-export const dynamicParams = false;
+// FALLBACK property
+export const dynamicParams = true;
 
 export default ProductDetailPage;
