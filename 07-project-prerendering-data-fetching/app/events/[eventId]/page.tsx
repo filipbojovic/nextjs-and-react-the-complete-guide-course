@@ -1,11 +1,17 @@
 import EventDetailContainer from "@/components/event-detail/event-detail-container";
 import { EventModel } from "@/components/events/event-container";
 import { getFeaturedEvents, getEventById } from "@/helpers/api-util";
+import { Metadata } from "next";
 
 type EventDetailPageProps = {
   params: {
     eventId: string;
   };
+};
+
+export const metadata: Metadata = {
+  title: "All events",
+  description: "Find a lot of great events that allow you to evolve...",
 };
 
 async function EventDetailPage({ params }: EventDetailPageProps) {
