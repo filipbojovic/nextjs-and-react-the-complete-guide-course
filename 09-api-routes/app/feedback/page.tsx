@@ -2,6 +2,12 @@
 import { useState } from "react";
 import { FeedbackDto, GET } from "../api/feedback/route";
 
+/*
+This file by using one of the following ways:
+  1. use useEffect hook and remove async keyword from functions
+  2. separte the whole component into two: client and server
+ */
+
 export default async function FeedbackPage() {
   const [feedbackData, setFeedbackData] = useState<FeedbackDto>();
 
