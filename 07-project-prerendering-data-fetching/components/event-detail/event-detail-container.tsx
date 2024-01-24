@@ -3,6 +3,7 @@ import EventContent from "./event-content";
 import EventLogistics from "./event-logistics";
 import EventSummary from "./event-summary";
 import { EventModel } from "../events/event-container";
+import Comments from "../input/comments";
 
 export default function EventDetailContainer({ event }: { event: EventModel }) {
   if (!event) {
@@ -25,6 +26,7 @@ export default function EventDetailContainer({ event }: { event: EventModel }) {
       <EventContent>
         <p>{event.description}</p>
       </EventContent>
+      <Comments eventId={event.id} />
     </Fragment>
   );
 }

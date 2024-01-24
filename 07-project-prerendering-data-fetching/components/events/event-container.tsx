@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import EventsSearch from "./events-search";
 import EventList from "./event-list";
 import { useRouter } from "next/navigation";
+import NewsletterRegistration from "../input/newsletter-registration";
 
 export type EventModel = {
   id: string;
@@ -28,6 +29,7 @@ export default function EventContainer({ events }: { events: EventModel[] }) {
   return (
     <Fragment>
       <EventsSearch onSearch={findEventsHandler} />
+      <NewsletterRegistration />
       <EventList items={events} />
     </Fragment>
   );
