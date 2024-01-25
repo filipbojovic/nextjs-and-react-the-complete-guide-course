@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Layout from "@/components/layout/layout";
+import { NotificationContextProvider } from "@/store/notification-context";
+import MainHeader from "@/components/layout/main-header";
+import Notification from "@/components/notification/notification";
+import NotificationContainer from "../components/notification/notification-container";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,7 +17,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Layout>{children}</Layout>
+        <NotificationContextProvider>
+          <MainHeader />
+          <main>{children}</main>
+          <NotificationContainer />
+        </NotificationContextProvider>
       </body>
     </html>
   );
